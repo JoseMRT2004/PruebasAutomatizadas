@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Camiones | {{ app_name }}{% endblock %}
+{% block content %}
+<h1>Camiones</h1>
+<div class="list-toolbar">
+    <form action="/camiones" method="GET" class="search-form">
+        <input type="text" name="q" value="{{ q }}" placeholder="Buscar…">
+        <button type="submit" class="btn btn-secondary">Buscar</button>
+    </form>
+    {% if q %}<a href="/camiones" class="btn btn-outline">Limpiar</a>{% endif %}
+    {% if user and user.role in ('admin', 'dispatcher') %}
+    <a href="/camiones/new" class="btn btn-primary">Nuevo</a>
+    {% endif %}
+</div>
+
+{% if camiones %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Placa</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+            <th>Capacidad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for camion in camiones %}
+        <tr>
+            <td>{{ camion.placa }}</td>
+            <td>{{ camion.marca or '-' }}</td>
+            <td>{{ camion.modelo or '-' }}</td>
+            <td>{{ camion.anio or '-' }}</td>
+            <td>{{ camion.capacidad or '-' }}</td>
+            <td><span class="badge badge-{{ camion.estado }}">{{ camion.estado }}</span></td>
+            <td class="actions">
+                {% if user and user.role in ('admin', 'dispatcher') %}
+                <a href="/camiones/{{ camion.id }}/edit" class="btn btn-secondary btn-sm">Editar</a>
+                <form action="/camiones/{{ camion.id }}/delete" method="POST" class="inline-form">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+                {% else %}
+                <span class="muted">—</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">{% if q %}No se encontraron resultados para la búsqueda.{% else %}No hay registros.{% endif %}</div>
+{% endif %}
+{% endblock %}

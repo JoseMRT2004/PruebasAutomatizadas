@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Panel de control | {{ app_name }}{% endblock %}
+{% block content %}
+<h1>Panel de control</h1>
+<div class="stats-grid">
+    <a href="/choferes" class="stat-card">
+        <span class="stat-number">{{ count_choferes }}</span>
+        <span class="stat-label">Choferes</span>
+    </a>
+    <a href="/camiones" class="stat-card">
+        <span class="stat-number">{{ count_camiones }}</span>
+        <span class="stat-label">Camiones</span>
+    </a>
+    <a href="/rutas" class="stat-card">
+        <span class="stat-number">{{ count_rutas }}</span>
+        <span class="stat-label">Rutas</span>
+    </a>
+    <a href="/horas" class="stat-card">
+        <span class="stat-number">{{ count_horas }}</span>
+        <span class="stat-label">Horas registradas</span>
+    </a>
+</div>
+<h2 class="section-title">Acciones rápidas</h2>
+<div class="quick-actions">
+    {% if user and user.role in ('admin', 'dispatcher') %}
+    <a href="/choferes/new" class="btn btn-primary">Nuevo chofer</a>
+    <a href="/camiones/new" class="btn btn-primary">Nuevo camión</a>
+    <a href="/rutas/new" class="btn btn-primary">Nueva ruta</a>
+    <a href="/horas/new" class="btn btn-primary">Registrar horas</a>
+    {% else %}
+    <a href="/choferes" class="btn btn-outline">Ver choferes</a>
+    <a href="/camiones" class="btn btn-outline">Ver camiones</a>
+    <a href="/rutas" class="btn btn-outline">Ver rutas</a>
+    <a href="/horas" class="btn btn-outline">Ver horas</a>
+    {% endif %}
+</div>
+{% endblock %}

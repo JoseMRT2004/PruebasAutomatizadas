@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{% if ruta %}Editar Ruta{% else %}Nueva Ruta{% endif %} | {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{% if ruta %}Editar Ruta{% else %}Nueva Ruta{% endif %}</h1>
+
+{% if error %}
+<div id="form-error" class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+<form action="{% if ruta %}/rutas/{{ ruta.id }}/edit{% else %}/rutas/new{% endif %}" method="POST">
+    <div class="form-group">
+        <label for="origen">Origen</label>
+        <input type="text" id="origen" name="origen" value="{{ form.origen }}" required>
+    </div>
+    <div class="form-group">
+        <label for="destino">Destino</label>
+        <input type="text" id="destino" name="destino" value="{{ form.destino }}" required>
+    </div>
+    <div class="form-group">
+        <label for="distancia_km">Distancia (km)</label>
+        <input type="number" id="distancia_km" name="distancia_km" value="{{ form.distancia_km }}" step="0.1" required>
+    </div>
+    <div class="form-group">
+        <label for="duracion_min">Duración (min)</label>
+        <input type="number" id="duracion_min" name="duracion_min" value="{{ form.duracion_min }}">
+    </div>
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <select id="estado" name="estado">
+            <option value="activa" {% if form.estado == 'activa' %}selected{% endif %}>activa</option>
+            <option value="inactiva" {% if form.estado == 'inactiva' %}selected{% endif %}>inactiva</option>
+        </select>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="/rutas" class="btn btn-outline">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% if user %}
+    <aside class="sidebar">
+        <a href="/dashboard" class="brand">{{ app_name }}</a>
+        <nav class="side-nav">
+            <a href="/dashboard" class="{% if request.url.path == '/dashboard' %}active{% endif %}">Inicio</a>
+            <a href="/choferes" class="{% if request.url.path.startswith('/choferes') %}active{% endif %}">Choferes</a>
+            <a href="/camiones" class="{% if request.url.path.startswith('/camiones') %}active{% endif %}">Camiones</a>
+            <a href="/rutas" class="{% if request.url.path.startswith('/rutas') %}active{% endif %}">Rutas</a>
+            <a href="/horas" class="{% if request.url.path.startswith('/horas') %}active{% endif %}">Horas</a>
+        </nav>
+        <div class="side-footer">
+            <span class="user-info">{{ user.full_name }} <em class="role-badge">{{ user.role }}</em></span>
+            <a href="/logout" class="btn btn-outline btn-sm btn-block">Cerrar sesión</a>
+        </div>
+    </aside>
+    {% endif %}
+
+    <main class="main{% if not user %} main-auth{% endif %}">
+        <div class="container">
+            {% if flash %}
+            <div id="flash" class="flash-{{ flash.kind }}">{{ flash.message }}</div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+        {% if user %}
+        <footer class="footer">Gestión de Transporte</footer>
+        {% endif %}
+    </main>
+</body>
+</html>

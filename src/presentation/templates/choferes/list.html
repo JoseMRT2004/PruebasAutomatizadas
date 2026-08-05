@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Choferes | {{ app_name }}{% endblock %}
+{% block content %}
+<h1>Choferes</h1>
+<div class="list-toolbar">
+    <form action="/choferes" method="GET" class="search-form">
+        <input type="text" name="q" value="{{ q }}" placeholder="Buscar…">
+        <button type="submit" class="btn btn-secondary">Buscar</button>
+    </form>
+    {% if q %}<a href="/choferes" class="btn btn-outline">Limpiar</a>{% endif %}
+    {% if user and user.role in ('admin', 'dispatcher') %}
+    <a href="/choferes/new" class="btn btn-primary">Nuevo</a>
+    {% endif %}
+</div>
+
+{% if choferes %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Licencia</th>
+            <th>Teléfono</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for chofer in choferes %}
+        <tr>
+            <td>{{ chofer.nombre }}</td>
+            <td>{{ chofer.cedula or '-' }}</td>
+            <td>{{ chofer.licencia or '-' }}</td>
+            <td>{{ chofer.telefono or '-' }}</td>
+            <td><span class="badge badge-{{ chofer.estado }}">{{ chofer.estado }}</span></td>
+            <td class="actions">
+                {% if user and user.role in ('admin', 'dispatcher') %}
+                <a href="/choferes/{{ chofer.id }}/edit" class="btn btn-secondary btn-sm">Editar</a>
+                <form action="/choferes/{{ chofer.id }}/delete" method="POST" class="inline-form">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+                {% else %}
+                <span class="muted">—</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">{% if q %}No se encontraron resultados para la búsqueda.{% else %}No hay registros.{% endif %}</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Registrar horas | {{ app_name }}{% endblock %}
+{% block content %}
+<h1>Registrar horas</h1>
+
+{% if error %}
+<div id="form-error" class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+<form action="/horas/new" method="POST">
+    <div class="form-group">
+        <label for="chofer_id">Chofer</label>
+        <select id="chofer_id" name="chofer_id" required>
+            <option value="">Seleccionar chofer…</option>
+            {% for ch in choferes %}
+            <option value="{{ ch.id }}" {% if form.chofer_id|string == ch.id|string %}selected{% endif %}>{{ ch.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="ruta_id">Ruta</label>
+        <select id="ruta_id" name="ruta_id" required>
+            <option value="">Seleccionar ruta…</option>
+            {% for r in rutas %}
+            <option value="{{ r.id }}" {% if form.ruta_id|string == r.id|string %}selected{% endif %}>{{ r.label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha" name="fecha" value="{{ form.fecha }}" required>
+    </div>
+    <div class="form-group">
+        <label for="horas">Horas</label>
+        <input type="number" id="horas" name="horas" value="{{ form.horas }}" step="0.5" min="1" max="24" required>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Registrar horas</button>
+        <a href="/horas" class="btn btn-outline">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

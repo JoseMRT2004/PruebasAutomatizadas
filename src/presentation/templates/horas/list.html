@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Horas trabajadas | {{ app_name }}{% endblock %}
+{% block content %}
+<h1>Horas trabajadas</h1>
+<div class="list-toolbar">
+    {% if user and user.role in ('admin', 'dispatcher') %}
+    <a href="/horas/new" class="btn btn-primary">Nuevo registro</a>
+    {% endif %}
+</div>
+
+{% if horas %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Chofer</th>
+            <th>Ruta</th>
+            <th>Fecha</th>
+            <th>Horas</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for hora in horas %}
+        <tr>
+            <td>{{ hora.chofer_nombre }}</td>
+            <td>{{ hora.ruta_label }}</td>
+            <td>{{ hora.fecha }}</td>
+            <td>{{ hora.horas }}</td>
+            <td class="actions">
+                {% if user and user.role in ('admin', 'dispatcher') %}
+                <form action="/horas/{{ hora.id }}/delete" method="POST" class="inline-form">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+                {% else %}
+                <span class="muted">—</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">No hay registros.</div>
+{% endif %}
+{% endblock %}
