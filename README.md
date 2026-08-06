@@ -71,9 +71,5 @@ uv run pytest tests/test_login.py   # solo un flujo
 ├── scripts/
 │   ├── start_app.sh        # Levanta la aplicación
 │   └── run_e2e.sh          # Ejecuta la suite completa
-├── reports/report.html     # Reporte HTML de resultados (pytest-html)
 ├── screenshots/            # Capturas automáticas por escenario
-└── docs/
-    ├── user-stories.md     # 5 historias de usuario con criterios de aceptación y rechazo
-    └── azure-setup.md      # Guía para documentarlas en Jira/Azure DevOps
 ```
