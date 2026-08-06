@@ -46,11 +46,6 @@ HEADLESS=1 uv run pytest -v     # modo sin ventana (servidores/CI)
 uv run pytest tests/test_login.py   # solo un flujo
 ```
 
-## Historias de usuario
-
-Las 5 historias con criterios de aceptación y rechazo están en
-[`docs/user-stories.md`](docs/user-stories.md), listas para documentar en Jira o Azure DevOps.
-La trazabilidad historia ↔ casos de prueba:
 
 | Historia | Archivo de pruebas | Escenarios |
 | --- | --- | --- |
@@ -82,14 +77,3 @@ La trazabilidad historia ↔ casos de prueba:
     ├── user-stories.md     # 5 historias de usuario con criterios de aceptación y rechazo
     └── azure-setup.md      # Guía para documentarlas en Jira/Azure DevOps
 ```
-
-## Entregables de la tarea
-
-| Entregable | Enlace |
-| --- | --- |
-| Repositorio de código (GitHub) | `https://github.com/JoseMRT2004/<repo>` |
-| Tablero Jira / Azure DevOps | (completar) |
-| Video demostrativo (YouTube/OneDrive) | (completar) |
-
-> Regla de la tarea: sin acceso público al repositorio, tablero o video la calificación es 0.
-> Los enlaces deben ser públicos o con acceso abierto.
